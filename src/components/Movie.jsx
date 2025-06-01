@@ -254,7 +254,7 @@ export default function Movie() {
     >
                     <strong>{torrent.title}</strong> <br />
                     Size: {torrent.size} | Seeds: {torrent.seeds} | Peers: {torrent.peers} <br />
-                   <a
+                   <a 
   href={torrent.magnet}
   style={{
     display: "inline-block",
@@ -269,6 +269,8 @@ export default function Movie() {
     fontSize: "1rem",
     maxWidth: "100%",
     wordBreak: "break-word",
+  msTouchAction: "manipulation",
+  pointerEvents: "auto"
   }}
   rel="noopener noreferrer"
 >
