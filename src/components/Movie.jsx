@@ -254,15 +254,24 @@ export default function Movie() {
     >
                     <strong>{torrent.title}</strong> <br />
                     Size: {torrent.size} | Seeds: {torrent.seeds} | Peers: {torrent.peers} <br />
-                    <button style={{width:"fitcontent"}}>
-<a
-  href={torrent.magnet}
-  onClick={(e) => {
+<button
+  style={{
+    padding: "0.75rem 1rem",
+    backgroundColor: "#00bcd4",
+    color: "#121212",
+    borderRadius: "6px",
+    fontWeight: "bold",
+    fontSize: "1rem",
+    cursor: "pointer",
+    userSelect: "none",
+    border: "none",
+    maxWidth: "fit-content",
+  }}
+  onClick={() => {
     let timeout = setTimeout(() => {
       alert("It seems a torrent client is not installed on your device. Please install uTorrent or another torrent app to open magnet links.");
-    }, 5000); // wait 1.5 seconds before alert
+    }, 5000);
 
-    // If user switches away from the page (likely the client opened), cancel alert
     const onVisibilityChange = () => {
       if (document.hidden) {
         clearTimeout(timeout);
@@ -270,29 +279,14 @@ export default function Movie() {
       }
     };
     document.addEventListener("visibilitychange", onVisibilityChange);
+
+    // Open magnet link
+    window.location.href = torrent.magnet;
   }}
-  style={{
-    display: "inline-block",
-    padding: "0.75rem 1rem",
-    backgroundColor: "#00bcd4",
-    userSelect: "none",
-    color: "#121212",
-    width: "100%",
-    borderRadius: "6px",
-    textDecoration: "none",
-    fontWeight: "bold",
-    fontSize: "1rem",
-    maxWidth: "100%",
-    wordBreak: "break-word",
-    msTouchAction: "manipulation",
-    pointerEvents: "auto",
-  }}
-  rel="noopener noreferrer"
 >
   Download Torrent
-</a>
-
 </button>
+
                   </li>
                 ))}
               </ul>
