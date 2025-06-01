@@ -226,35 +226,53 @@ export default function Movie() {
             </div>
           ) : torrents.length > 0 ? (
             <>
-              <ul style={{ listStyle: "none", padding: 0 }}>
-                {torrents.map((torrent, index) => (
-                  <li
-                    key={index}
-                    style={{
-                      marginBottom: "1rem",
-                      padding: "1rem",
-                      backgroundColor: "#333",
-                      borderRadius: "8px",
-                    }}
-                  >
+             <ul
+  style={{
+    listStyle: "none",
+    padding: 0,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
+    maxWidth: "100%", // prevents overflow
+    boxSizing: "border-box"
+  }}
+>
+  {torrents.map((torrent, index) => (
+    <li
+      key={index}
+      style={{
+        marginBottom: "1rem",
+        padding: "1rem",
+        width: "100%",
+        maxWidth: "100%", // keep it within viewport
+        boxSizing: "border-box",
+        backgroundColor: "#333",
+        borderRadius: "8px",
+        wordBreak: "break-word", // helps magnet links not overflow
+      }}
+    >
                     <strong>{torrent.title}</strong> <br />
                     Size: {torrent.size} | Seeds: {torrent.seeds} | Peers: {torrent.peers} <br />
-                    <a
-                      href={torrent.magnet}
-                      style={{
-                        display: "inline-block",
-                        marginTop: "0.5rem",
-                        padding: "1rem 1rem",
-                        backgroundColor: "#00bcd4",
-                        color: "#121212",
-                        borderRadius: "6px",
-                        textDecoration: "none",
-                        fontWeight: "bold",
-                      }}
-                      rel="noopener noreferrer"
-                    >
-                      Download Torrent
-                    </a>
+                   <a
+  href={torrent.magnet}
+  style={{
+    display: "inline-block",
+    marginTop: "0.5rem",
+    padding: "0.75rem 1rem",
+    backgroundColor: "#00bcd4",
+    color: "#121212",
+    borderRadius: "6px",
+    textDecoration: "none",
+    fontWeight: "bold",
+    fontSize: "1rem",
+    maxWidth: "100%",
+    wordBreak: "break-word",
+  }}
+  rel="noopener noreferrer"
+>
+  Download Torrent
+</a>
                   </li>
                 ))}
               </ul>
