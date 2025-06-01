@@ -95,6 +95,7 @@ export default function FeaturedMovies() {
               transition: "transform 0.3s",
               display: "flex",
               flexDirection: "column",
+              marginLeft:"40px"
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "scale(1.05)";

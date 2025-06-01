@@ -244,7 +244,7 @@ export default function Movie() {
                       style={{
                         display: "inline-block",
                         marginTop: "0.5rem",
-                        padding: "0.5rem 1rem",
+                        padding: "1rem 1rem",
                         backgroundColor: "#00bcd4",
                         color: "#121212",
                         borderRadius: "6px",
