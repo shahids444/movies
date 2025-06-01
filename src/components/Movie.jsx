@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
-// const API_KEY = "2328d0fc2b851f9fc3743b401ffe4fd3";
+import Banner from "../adcomponents/Banner";
+import Header from "./Header";
+import Popunder from "../adcomponents/Popunder";
+import Nativebanner from "../adcomponents/Nativebanner";
+import SocialBar from "../adcomponents/Socialbar";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_LARGE = "https://image.tmdb.org/t/p/w780";
@@ -16,6 +19,29 @@ export default function Movie() {
   const [loadingTorrents, setLoadingTorrents] = useState(false);
   const navigate = useNavigate();
 
+  const buttonStyle = {
+    backgroundColor: "#4CAF50", // vibrant green
+    color: "white",
+    padding: "12px 24px",
+    margin:"10px",
+    fontSize: "18px",
+    fontWeight: "600",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    boxShadow: "0 4px 10px rgba(76, 175, 80, 0.3)",
+    transition: "background-color 0.3s ease, transform 0.2s ease",
+    textDecoration: "none",
+    display: "inline-block",
+  };
+
+  const handleClick = () => {
+     window.open(
+      "https://www.profitableratecpm.com/zt41y6pwq5?key=8609ed60ac1d8652dc5ae9c49a613362",
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
   useEffect(() => {
     fetchMovie();
     fetchVideos();
@@ -25,7 +51,9 @@ export default function Movie() {
 
   async function fetchMovie() {
     try {
-      const res = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=en-US`);
+      const res = await fetch(
+        `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=en-US`
+      );
       const data = await res.json();
       setMovie(data);
       fetchTorrents(data.title);
@@ -36,7 +64,9 @@ export default function Movie() {
 
   async function fetchVideos() {
     try {
-      const res = await fetch(`${BASE_URL}/movie/${id}/videos?api_key=${API_KEY}&language=en-US`);
+      const res = await fetch(
+        `${BASE_URL}/movie/${id}/videos?api_key=${API_KEY}&language=en-US`
+      );
       const data = await res.json();
       setVideos(data.results || []);
     } catch (err) {
@@ -46,7 +76,9 @@ export default function Movie() {
 
   async function fetchCast() {
     try {
-      const res = await fetch(`${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}&language=en-US`);
+      const res = await fetch(
+        `${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}&language=en-US`
+      );
       const data = await res.json();
       setCast(data.cast || []);
     } catch (err) {
@@ -57,7 +89,11 @@ export default function Movie() {
   async function fetchTorrents(name) {
     try {
       setLoadingTorrents(true);
-      const res = await fetch(`https://moviesbackend-mkeq.onrender.com/api/torrents/${encodeURIComponent(name)}`);
+      const res = await fetch(
+        `https://moviesbackend-mkeq.onrender.com/api/torrents/${encodeURIComponent(
+          name
+        )}`
+      );
       const data = await res.json();
       setTorrents(data);
     } catch (err) {
@@ -68,20 +104,23 @@ export default function Movie() {
     }
   }
 
-  if (!movie) return <p style={{ textAlign: "center", marginTop: "2rem" }}>Loading movie details...</p>;
+  if (!movie)
+    return (
+      <p style={{ textAlign: "center", marginTop: "2rem" }}>
+        Loading movie details...
+      </p>
+    );
 
   // Find the official trailer from videos
   const trailer = videos.find(
     (vid) =>
-      vid.type === "Trailer" &&
-      vid.site === "YouTube" &&
-      (vid.official || true) // fallback to any trailer
+      vid.type === "Trailer" && vid.site === "YouTube" && (vid.official || true) // fallback to any trailer
   );
 
   return (
     <div
       style={{
-        minWidth:"99vw",
+        minWidth: "99vw",
         margin: "2rem auto",
         backgroundColor: "#1c1c1c",
         padding: "2rem",
@@ -94,6 +133,7 @@ export default function Movie() {
         maxWidth: "900px",
       }}
     >
+        
       <button
         onClick={() => navigate(-1)}
         style={{
@@ -130,11 +170,47 @@ export default function Movie() {
           boxShadow: "0 6px 20px rgba(0,0,0,0.5)",
         }}
       />
-
+ <div style={{ width: "100%", marginBottom: "1rem", marginTop: "6rem" }}>
+        <Banner />
+        <Popunder />
+        <Nativebanner/>
+        <SocialBar/>
+      </div>
       <div style={{ padding: "0 1rem" }}>
-        <h1 style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>{movie.title}</h1>
-        {movie.tagline && <p style={{ fontStyle: "italic", color: "#ccc", marginBottom: "1.5rem" }}>"{movie.tagline}"</p>}
-
+        <h1 style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>
+          {movie.title}
+        </h1>
+          <button
+      style={buttonStyle}
+      onClick={handleClick}
+      onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#45a049")}
+      onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#4CAF50")}
+      onMouseDown={e => (e.currentTarget.style.transform = "scale(0.95)")}
+      onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
+    >
+      Download Now
+    </button>
+        {movie.tagline && (
+          <p
+            style={{
+              fontStyle: "italic",
+              color: "#ccc",
+              marginBottom: "1.5rem",
+            }}
+          >
+            "{movie.tagline}"
+          </p>
+        )}
+  <button
+      style={buttonStyle}
+      onClick={handleClick}
+      onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#45a049")}
+      onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#4CAF50")}
+      onMouseDown={e => (e.currentTarget.style.transform = "scale(0.95)")}
+      onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
+    >
+      Watch Online
+    </button>
         <p style={{ fontSize: "1.2rem", lineHeight: "1.6" }}>
           {movie.overview || "No detailed overview available."}
         </p>
@@ -152,11 +228,43 @@ export default function Movie() {
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              style={{ borderRadius: "12px", boxShadow: "0 6px 20px rgba(0,0,0,0.5)" }}
+              style={{
+                borderRadius: "12px",
+                boxShadow: "0 6px 20px rgba(0,0,0,0.5)",
+              }}
             />
           </div>
         )}
-
+          <button
+      style={buttonStyle}
+      onClick={handleClick}
+      onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#45a049")}
+      onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#4CAF50")}
+      onMouseDown={e => (e.currentTarget.style.transform = "scale(0.95)")}
+      onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
+    >
+      Download 480p
+    </button>
+  <button
+      style={buttonStyle}
+      onClick={handleClick}
+      onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#45a049")}
+      onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#4CAF50")}
+      onMouseDown={e => (e.currentTarget.style.transform = "scale(0.95)")}
+      onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
+    >
+      Download 720p
+    </button>
+  <button
+      style={buttonStyle}
+      onClick={handleClick}
+      onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#45a049")}
+      onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#4CAF50")}
+      onMouseDown={e => (e.currentTarget.style.transform = "scale(0.95)")}
+      onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
+    >
+      Download 1080p
+    </button>
         {/* Cast Section */}
         {cast.length > 0 && (
           <div style={{ marginTop: "2rem" }}>
@@ -164,7 +272,7 @@ export default function Movie() {
             <div
               style={{
                 display: "flex",
-                flexWrap:"wrap",
+                flexWrap: "wrap",
                 gap: "1rem",
                 overflowX: "auto",
                 paddingBottom: "1rem",
@@ -179,6 +287,7 @@ export default function Movie() {
                     color: "#ddd",
                   }}
                 >
+                  <Banner />
                   <img
                     src={
                       actor.profile_path
@@ -192,7 +301,9 @@ export default function Movie() {
                       marginBottom: "0.5rem",
                     }}
                   />
-                  <p style={{ fontWeight: "bold", fontSize: "1rem", margin: 0 }}>
+                  <p
+                    style={{ fontWeight: "bold", fontSize: "1rem", margin: 0 }}
+                  >
                     {actor.name}
                   </p>
                   <p style={{ fontSize: "0.9rem", color: "#aaa", margin: 0 }}>
@@ -211,7 +322,13 @@ export default function Movie() {
           <h2 style={{ marginBottom: "1rem" }}>Download Links</h2>
 
           {loadingTorrents ? (
-            <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "1rem",
+              }}
+            >
               <div
                 style={{
                   border: "4px solid #ccc",
@@ -222,75 +339,110 @@ export default function Movie() {
                   animation: "spin 1s linear infinite",
                 }}
               />
-              <span style={{ margin: "10px", fontWeight: "bold", marginTop: "3px" }}>Loading...</span>
+              <span
+                style={{ margin: "10px", fontWeight: "bold", marginTop: "3px" }}
+              >
+                Loading...
+              </span>
             </div>
           ) : torrents.length > 0 ? (
             <>
-             <ul
-  style={{
-    listStyle: "none",
-    padding: 0,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    width: "100%",
-    maxWidth: "100%", // prevents overflow
-    boxSizing: "border-box"
-  }}
->
-  {torrents.map((torrent, index) => (
-    <li
-      key={index}
-      style={{
-        marginBottom: "1rem",
-        padding: "1rem",
-        width: "100%",
-        maxWidth: "100%", // keep it within viewport
-        boxSizing: "border-box",
-        backgroundColor: "#333",
-        borderRadius: "8px",
-        wordBreak: "break-word", // helps magnet links not overflow
-      }}
-    >
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  width: "100%",
+                  maxWidth: "100%", // prevents overflow
+                  boxSizing: "border-box",
+                }}
+              >
+                {torrents.map((torrent, index) => (
+                  <li
+                    key={index}
+                    style={{
+                      marginBottom: "1rem",
+                      padding: "1rem",
+                      width: "100%",
+                      maxWidth: "100%", // keep it within viewport
+                      boxSizing: "border-box",
+                      backgroundColor: "#333",
+                      borderRadius: "8px",
+                      wordBreak: "break-word", // helps magnet links not overflow
+                    }}
+                  >
                     <strong>{torrent.title}</strong> <br />
-                    Size: {torrent.size} | Seeds: {torrent.seeds} | Peers: {torrent.peers} <br />
-<button
-  style={{
-    padding: "0.75rem 1rem",
-    backgroundColor: "#00bcd4",
-    color: "#121212",
-    borderRadius: "6px",
-    fontWeight: "bold",
-    fontSize: "1rem",
-    cursor: "pointer",
-    userSelect: "none",
-    border: "none",
-    maxWidth: "fit-content",
-  }}
-  onClick={() => {
-    let timeout = setTimeout(() => {
-      alert("It seems a torrent client is not installed on your device. Please install uTorrent or another torrent app to open magnet links.");
-    }, 5000);
+                    Size: {torrent.size} | Seeds: {torrent.seeds} | Peers:{" "}
+                    {torrent.peers} <br />
+                    <button
+                      style={{
+                        padding: "0.75rem 1rem",
+                        backgroundColor: "#00bcd4",
+                        color: "#121212",
+                        borderRadius: "6px",
+                        fontWeight: "bold",
+                        fontSize: "1rem",
+                        cursor: "pointer",
+                        userSelect: "none",
+                        border: "none",
+                        maxWidth: "fit-content",
+                      }}
+                      onClick={() => {
+                        let timeout = setTimeout(() => {
+                          alert(
+                            "It seems a torrent client is not installed on your device. Please install uTorrent or another torrent app to open magnet links."
+                          );
+                        }, 5000);
 
-    const onVisibilityChange = () => {
-      if (document.hidden) {
-        clearTimeout(timeout);
-        document.removeEventListener("visibilitychange", onVisibilityChange);
-      }
-    };
-    document.addEventListener("visibilitychange", onVisibilityChange);
+                        const onVisibilityChange = () => {
+                          if (document.hidden) {
+                            clearTimeout(timeout);
+                            document.removeEventListener(
+                              "visibilitychange",
+                              onVisibilityChange
+                            );
+                          }
+                        };
+                        document.addEventListener(
+                          "visibilitychange",
+                          onVisibilityChange
+                        );
 
-    // Open magnet link
-    window.location.href = torrent.magnet;
-  }}
->
-  Download Torrent
-</button>
-
+                        // Open magnet link
+                        window.location.href = torrent.magnet;
+                      }}
+                    >
+                      Download Torrent
+                    </button>
                   </li>
                 ))}
               </ul>
-              <p>Make sure that torrent downloader is installed or copy the magnet link</p>
+  <button
+      style={buttonStyle}
+      onClick={handleClick}
+      onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#45a049")}
+      onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#4CAF50")}
+      onMouseDown={e => (e.currentTarget.style.transform = "scale(0.95)")}
+      onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
+    >
+      Fast Download
+    </button>
+  <button
+      style={buttonStyle}
+      onClick={handleClick}
+      onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#45a049")}
+      onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#4CAF50")}
+      onMouseDown={e => (e.currentTarget.style.transform = "scale(0.95)")}
+      onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
+    >
+      Google Drive Link
+    </button>
+              <p>
+                Make sure that torrent downloader is installed or copy the
+                magnet link
+              </p>
             </>
           ) : (
             <p>No torrents found for this movie.</p>

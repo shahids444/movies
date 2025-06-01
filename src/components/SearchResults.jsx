@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from './Header';
-
+import Banner from "../adcomponents/Banner";
+import Popunder from "../adcomponents/Popunder";
+import Nativebanner from "../adcomponents/Nativebanner";
+import SocialBar from "../adcomponents/Socialbar";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY; // Replace with your TMDB API key
 const BASE_URL = 'https://api.themoviedb.org/3';
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
@@ -36,6 +39,12 @@ export default function SearchResults() {
   return (
     <>
     <Header/>
+     <div style={{ width: "100%", marginBottom: "1rem", marginTop: "6rem" }}>
+        <Banner />
+        <Popunder />
+        <Nativebanner/>
+        <SocialBar/>
+      </div>
     <div style={{ padding: '2rem', width:'100vw', backgroundColor: '#121212', minHeight: '100vh', color: '#fff' }}>
       <h2 style={{ fontSize: '24px', marginBottom: '1rem' }}>
         Search Results for: <em style={{ color: '#00bcd4' }}>{searchTerm}</em>

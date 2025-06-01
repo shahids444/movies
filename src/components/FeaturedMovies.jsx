@@ -1,10 +1,23 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Header from "./Header";
+import Banner from "../adcomponents/Banner";
+import Popunder from "../adcomponents/Popunder";
+import Nativebanner from "../adcomponents/Nativebanner";
+import SocialBar from "../adcomponents/Socialbar";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE = "https://image.tmdb.org/t/p/w342";
+
+// Helper to chunk array into smaller arrays of given size
+function chunkArray(arr, size) {
+  const chunks = [];
+  for (let i = 0; i < arr.length; i += size) {
+    chunks.push(arr.slice(i, i + size));
+  }
+  return chunks;
+}
 
 export default function FeaturedMovies() {
   const [movies, setMovies] = useState([]);
@@ -59,134 +72,157 @@ export default function FeaturedMovies() {
     navigate(`/movie/${movieId}`);
   }
 
+  // Chunk movies into groups of 6 for layout + ads
+  const moviesChunks = chunkArray(movies, 6);
+
   return (
     <>
       <Header />
+
       <h1 style={{ textAlign: "center", marginBottom: "1rem" }}>
         {language
           ? `Popular Movies (${language.toUpperCase()})`
           : "Popular Movies"}
       </h1>
-      <div
-        ref={containerRef}
-        onScroll={handleScroll}
-        style={{
-          display: "flex",
-          overflowX: "auto",
-          gap: "1rem",
-          padding: "1rem",
-          scrollBehavior: "smooth",
-          flexWrap: "wrap",
-          userSelect: "none",
-        }}
-      >
-        {movies.map((movie) => (
-          <div
-            key={movie.id}
-            onClick={() => handleClick(movie.id)}
-            style={{
-              flex: "0 0 auto",
-              width: "280px",
-              cursor: "pointer",
-              borderRadius: "12px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-              backgroundColor: "#121212",
-              color: "#eee",
-              transition: "transform 0.3s",
-              display: "flex",
-              flexDirection: "column",
-              marginLeft:"20px"
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "scale(1.05)";
-              e.currentTarget.style.boxShadow =
-                "0 8px 24px rgba(0,0,0,0.8)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "scale(1)";
-              e.currentTarget.style.boxShadow =
-                "0 4px 12px rgba(0,0,0,0.5)";
-            }}
-          >
-            {movie.poster_path ? (
-              <img
-                src={`${IMAGE_BASE}${movie.poster_path}`}
-                alt={movie.title}
-                style={{
-                  width: "100%",
-                  height: "330px",
-                  objectFit: "cover",
-                  borderRadius: "12px 12px 0 0",
-                }}
-              />
-            ) : (
-              <div
-                style={{
-                  width: "100%",
-                  height: "330px",
-                  backgroundColor: "#333",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  fontSize: "1rem",
-                  color: "#999",
-                }}
-              >
-                No Image
-              </div>
-            )}
-            <div
-              style={{
-                padding: "0.75rem 1rem",
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <h3
-                style={{
-                  margin: "0 0 0.5rem",
-                  fontSize: "1.1rem",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {movie.title}
-              </h3>
-              <p
-                style={{
-                  fontSize: "0.85rem",
-                  color: "#bbb",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 4,
-                  WebkitBoxOrient: "vertical",
-                }}
-                title={movie.overview}
-              >
-                {movie.overview || "No description available."}
-              </p>
-            </div>
-          </div>
-        ))}
-
-        {loading && (
-          <div
-            style={{
-              flex: "0 0 auto",
-              width: "220px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "#888",
-            }}
-          >
-            Loading...
-          </div>
-        )}
+      <div style={{ width: "100%", marginBottom: "1rem", marginTop: "6rem" }}>
+        <Banner />
+        <Popunder />
+        <Nativebanner/>
+        <SocialBar/>
       </div>
+      {moviesChunks.map((chunk, idx) => (
+        <React.Fragment key={`chunk-${idx}`}>
+          <div
+            ref={idx === moviesChunks.length - 1 ? containerRef : null}
+            onScroll={idx === moviesChunks.length - 1 ? handleScroll : null}
+            style={{
+              display: "flex",
+              overflowX: "auto",
+              gap: "1rem",
+              padding: "1rem",
+              scrollBehavior: "smooth",
+              flexWrap: "wrap",
+              userSelect: "none",
+              marginBottom: "1rem",
+            }}
+          >
+            {chunk.map((movie) => (
+              <div
+                key={movie.id}
+                onClick={() => handleClick(movie.id)}
+                style={{
+                  flex: "0 0 auto",
+                  width: "280px",
+                  cursor: "pointer",
+                  borderRadius: "12px",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+                  backgroundColor: "#121212",
+                  color: "#eee",
+                  transition: "transform 0.3s",
+                  display: "flex",
+                  flexDirection: "column",
+                  marginLeft: "20px",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.05)";
+                  e.currentTarget.style.boxShadow =
+                    "0 8px 24px rgba(0,0,0,0.8)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.boxShadow =
+                    "0 4px 12px rgba(0,0,0,0.5)";
+                }}
+              >
+                {movie.poster_path ? (
+                  <img
+                    src={`${IMAGE_BASE}${movie.poster_path}`}
+                    alt={movie.title}
+                    style={{
+                      width: "100%",
+                      height: "330px",
+                      objectFit: "cover",
+                      borderRadius: "12px 12px 0 0",
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "330px",
+                      backgroundColor: "#333",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      fontSize: "1rem",
+                      color: "#999",
+                    }}
+                  >
+                    No Image
+                  </div>
+                )}
+                <div
+                  style={{
+                    padding: "0.75rem 1rem",
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <h3
+                    style={{
+                      margin: "0 0 0.5rem",
+                      fontSize: "1.1rem",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {movie.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "0.85rem",
+                      color: "#bbb",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      display: "-webkit-box",
+                      WebkitLineClamp: 4,
+                      WebkitBoxOrient: "vertical",
+                    }}
+                    title={movie.overview}
+                  >
+                    {movie.overview || "No description available."}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Full width ad after each chunk */}
+          <div style={{ width: "100%", marginBottom: "1rem" }}>
+            <Banner />
+            <Popunder />
+            <Nativebanner/>
+            <SocialBar/>
+          </div>
+        </React.Fragment>
+      ))}
+
+      {loading && (
+        <div
+          style={{
+            flex: "0 0 auto",
+            width: "220px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "#888",
+          }}
+        >
+          Loading...
+        </div>
+      )}
     </>
   );
 }
