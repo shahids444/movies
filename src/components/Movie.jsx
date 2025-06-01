@@ -261,6 +261,7 @@ export default function Movie() {
     marginTop: "0.5rem",
     padding: "0.75rem 1rem",
     backgroundColor: "#00bcd4",
+    userSelect:"none",
     color: "#121212",
     borderRadius: "6px",
     textDecoration: "none",
