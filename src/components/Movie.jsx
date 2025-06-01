@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const API_KEY = "2328d0fc2b851f9fc3743b401ffe4fd3";
+// const API_KEY = "2328d0fc2b851f9fc3743b401ffe4fd3";
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_LARGE = "https://image.tmdb.org/t/p/w780";
 const IMAGE_BASE_SMALL = "https://image.tmdb.org/t/p/w185";
