@@ -254,15 +254,17 @@ export default function Movie() {
     >
                     <strong>{torrent.title}</strong> <br />
                     Size: {torrent.size} | Seeds: {torrent.seeds} | Peers: {torrent.peers} <br />
+                    <button style={{width:"fitcontent"}}>
                    <a 
   href={torrent.magnet}
   style={{
     display: "inline-block",
-    marginTop: "0.5rem",
+    // marginTop: "0.5rem",
     padding: "0.75rem 1rem",
     backgroundColor: "#00bcd4",
     userSelect:"none",
     color: "#121212",
+    width:"100%",
     borderRadius: "6px",
     textDecoration: "none",
     fontWeight: "bold",
@@ -276,6 +278,7 @@ export default function Movie() {
 >
   Download Torrent
 </a>
+</button>
                   </li>
                 ))}
               </ul>
