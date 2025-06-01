@@ -1,0 +1,205 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    background-color: #000000;
+}
+nav{
+    background-color: #212121;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    flex-wrap: wrap;
+    position: fixed;
+    top:0;
+    width: 100%;
+    left: 0;
+    z-index: 3;
+    flex: 1 1 ;
+}
+
+
+.logo{
+    display: flex;
+    gap: 20px;
+
+}
+.logo img{
+    width: 100px;
+    height: 70px;
+    filter: invert(1);
+}
+button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.search{
+    display: flex;
+    height: 100%;
+    
+}
+
+#search{
+    height: auto;
+    width: 20rem;
+    height: 2.5rem;
+    background-color: #121212;
+    border:0.5px solid #303030;
+    padding-left:10px;
+    color:white;
+    
+}
+
+#search:focus{
+    border:none;
+    outline:none;
+}
+#search::placeholder{
+    color:grey;
+    font-size: 15px;
+}
+.tools{
+    display: flex;
+
+}
+.tools img{
+    width: 48px;
+    height: 30px;
+}
+
+
+
+.categories {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  background-color: #121212;
+  border-radius: 8px;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+/* Hide scrollbar for Chrome/Safari */
+.categories::-webkit-scrollbar {
+  display: none;
+}
+
+.categories button {
+  flex: 0 0 auto; /* Prevent buttons from shrinking */
+  background-color: #1e1e1e;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.categories button:hover {
+  background-color: #00bcd4;
+  color: #000;
+  transform: scale(1.03);
+}
+
+/* Optional: Improve touch responsiveness */
+@media (max-width: 768px) {
+  .categories {
+    padding: 0.5rem;
+    gap: 0.4rem;
+  }
+ iframe{
+  height: 300px;
+  /* width: 500px; */
+ }
+  .categories button {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+  }
+}
+
+.line{
+    width: 200px;
+    background-color: grey;
+    height: 1px;
+}
+
+aside{
+    background-color: #212121;
+    width:240px;
+    padding: 10px;
+    position: fixed;
+    color:white;
+    top:50px;
+    cursor: pointer;
+    left: 0;
+}
+.aside{
+    display: flex;
+    align-items: center;
+    transition: all;
+    transition-duration: 0.5s;
+    margin:5px;
+    gap:2rem;
+
+}
+.aside:hover{
+    background-color:grey;
+}
+
+section{
+    margin-left:250px;
+    margin-top:80px;
+}
+.card{
+    
+    width: 350px;
+    padding: 10px;
+    transition: all 0.3s;
+     border-radius: 5px;
+     cursor: pointer;
+     margin: 30px;
+}
+.card:hover{
+    background-color: grey;
+    
+}
+.card img{
+    width: 100%;
+    height: 70%;
+    object-fit: fill;
+    
+}
+
+h4{
+  color:grey; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding-left: 20px;
+}
+.card p{
+    padding-left: 10px;;
+    color:white;
+    font-weight: bolder;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.channelname{
+    font-size: 10px;
+    margin: 0 10px;
+    color: rgb(193, 193, 193);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+#main{
+    display: flex;
+    flex-wrap: wrap;
+}
+#searchbtn{
+    background-color: #303030;
+    width:4rem;
+    border-radius: 0;
+    height: 2.5rem;
+    padding:0px; 
+}
